@@ -1,0 +1,34 @@
+@import "../../assets/variable.scss";
+
+.start-screen {
+  background: url("../../assets/img/gamedesk.jpg") no-repeat center center fixed;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    max-height: 100vh;
+    max-width: 100%;
+  }
+  .starting-wood {
+    position: absolute;
+    max-width: 70vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+      filter: brightness(1.3);
+      cursor: pointer;
+    }
+  }
+
+  .start-btn {
+    position: absolute;
+    text-decoration: none;
+    color: $white;
+    z-index: 15;
+    font-size: $fontsize-H2;
+    text-align: center;
+  }
+}

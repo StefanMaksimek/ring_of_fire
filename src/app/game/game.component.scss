@@ -1,0 +1,74 @@
+@import "../../assets/variable.scss";
+
+.player-component {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.game-field {
+  height: 100vh;
+  width: 100%;
+  background: url("../../assets/img/gamedesk.jpg") no-repeat center center fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    max-width: 80vw;
+    max-height: 50vh;
+  }
+
+  .icon-box {
+    position: absolute;
+    top: 20px;
+    background-color: $white-tr;
+    padding: $spacing-S;
+    border-radius: $brd-radius;
+    box-shadow: 1px 1px 3px 3px rgb(0 0 0 / 20%);
+    .game-btn {
+      background-color: $primary;
+      &:hover {
+        transform: scale(1.05) translate(-5%, -5%);
+        box-shadow: $shadow;
+      }
+    }
+  }
+}
+
+.card-stack {
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  img {
+    position: absolute;
+    height: 220px;
+    box-shadow: $shadow;
+  }
+  .topCard {
+    cursor: pointer;
+    transition: $transition-ms;
+    &:hover {
+      filter: brightness(0.8);
+    }
+  }
+  .pick-card {
+    animation: pick-card-animation 1s linear;
+    transform: translate(500px, 600px) rotate(1080deg);
+  }
+}
+
+@keyframes pick-card-animation {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(250px, 300px) rotate(540deg) scale(1.3);
+  }
+
+  100% {
+    transform: translate(500px, 600px) rotate(1080deg) scale(1);
+  }
+}
