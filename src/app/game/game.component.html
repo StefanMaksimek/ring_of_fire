@@ -32,7 +32,7 @@
         'left.px': 40 + i * 3,
         'top.px': 40 + i * 2
       }"
-      src="../../assets/img/cards/overlay_red.png"
+      src="assets/img/cards/overlay_red.png"
     />
     <img
       class="topCard"
@@ -41,7 +41,7 @@
         'left.px': 40 + cards.numbers.length * 3,
         'top.px': 40 + cards.numbers.length * 2
       }"
-      src="../../assets/img/cards/overlay_red.png"
+      src="assets/img/cards/overlay_red.png"
     />
     <!-- Current card animation-->
     <img
@@ -52,7 +52,7 @@
         'top.px': cards.numbers.length * 2
       }"
       [ngClass]="{ 'pick-card': pickCardAnimation }"
-      src="../../assets/img/cards/{{ currentCard }}.png"
+      src="assets/img/cards/{{ currentCard }}.png"
     />
     <!-- Played card stack-->
     <img
@@ -62,7 +62,7 @@
       }"
       class="pick-card"
       *ngFor="let card of game.playedCards"
-      src="../../assets/img/cards/{{ card }}.png"
+      src="assets/img/cards/{{ card }}.png"
       alt=""
     />
   </div>

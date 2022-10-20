@@ -10,17 +10,17 @@
       <mat-label>Icon</mat-label>
       <mat-select [(ngModel)]="selectedIcon" name="icon">
         <mat-option *ngFor="let icon of icons" [value]="icon">
-          <img src="../../assets/img/player_icons/{{ icon }}" alt="" />
+          <img src="assets/img/player_icons/{{ icon }}" alt="" />
         </mat-option>
       </mat-select>
-      <img src="../../assets/img/player_icons/{{ selectedIcon }}" alt="" />
+      <img src="assets/img/player_icons/{{ selectedIcon }}" alt="" />
     </mat-form-field>
   </div>
 </div>
 <div class="preview">
   <div class="player-box">
     <div class="player">
-      <img src="../../assets/img/player_icons/{{ selectedIcon }}" alt="" />
+      <img src="assets/img/player_icons/{{ selectedIcon }}" alt="" />
       <span>{{ name }} </span>
     </div>
   </div>
