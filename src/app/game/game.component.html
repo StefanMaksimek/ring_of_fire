@@ -1,22 +1,36 @@
-<app-player
-  *ngFor="let player of game.players; let i = index"
-  [ngStyle]="{
-    'top.px': 20 + i * 60,
-    'z-index': 900 - i
-  }"
-  [name]="player.name"
-  [icon]="player.icon"
-  [color]="player.color"
-  class="player-component"
-></app-player>
 <div class="game-field">
+  <app-player
+    *ngFor="let player of game.players.slice().reverse(); let i = index"
+    [ngStyle]="{
+      'right.px': 20 + i * 10,
+      'top.px': 20 + i * 35,
+      'z-index': 900 + i
+    }"
+    [index]="i"
+    [players]="game.players.length"
+    [name]="player.name"
+    [icon]="player.icon"
+    class="player-component"
+  ></app-player>
+  <div class="icon-box">
+    <button
+      mat-fab
+      color="primary"
+      aria-label="Example icon button with a delete icon"
+      class="game-btn"
+      (click)="openDialog()"
+    >
+      <mat-icon>person_add</mat-icon>
+    </button>
+  </div>
+
   <div class="card-stack">
     <!--  Card stack -->
     <img
       *ngFor="let card of cards.numbers; let i = index"
       [ngStyle]="{
-        'left.px': i * 3,
-        'top.px': i * 2
+        'left.px': 40 + i * 3,
+        'top.px': 40 + i * 2
       }"
       src="../../assets/img/cards/overlay_red.png"
     />
@@ -24,8 +38,8 @@
       class="topCard"
       (click)="pickCard()"
       [ngStyle]="{
-        'left.px': cards.numbers.length * 3,
-        'top.px': cards.numbers.length * 2
+        'left.px': 40 + cards.numbers.length * 3,
+        'top.px': 40 + cards.numbers.length * 2
       }"
       src="../../assets/img/cards/overlay_red.png"
     />
@@ -52,15 +66,6 @@
       alt=""
     />
   </div>
-  <img src="../../assets/img/blue_fire.png" alt="" />
-  <div class="icon-box">
-    <button
-      mat-fab
-      color="primary"
-      aria-label="Example icon button with a delete icon"
-      class="game-btn"
-    >
-      <mat-icon>person_add</mat-icon>
-    </button>
-  </div>
+
+  <app-game-info [card]="currentCard" class="game-info"></app-game-info>
 </div>

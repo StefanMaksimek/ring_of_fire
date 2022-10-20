@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Game } from 'src/models/game';
+import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 
 @Component({
   selector: 'app-game',
@@ -9,7 +11,21 @@ import { Game } from 'src/models/game';
 export class GameComponent implements OnInit {
   public cards = {
     colors: ['clubs', 'spades', 'diamonds', 'hearts'],
-    numbers: ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k', 'a'],
+    numbers: [
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+      '9',
+      '10',
+      '11',
+      '12',
+      '13',
+    ],
   };
   public game!: Game;
 
@@ -18,15 +34,31 @@ export class GameComponent implements OnInit {
   pickCardAnimation: boolean = false;
   currentCard: any = '';
 
-  constructor() {}
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.newGame();
-    console.log(this.game);
+    this.renderPlayingStack();
+    shuffleStack(this.game.playingStack);
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogAddPlayerComponent);
+
+    dialogRef.afterClosed().subscribe(([name, selectedIcon]: any[]): void => {
+      if (name && name.length > 0) {
+        let player = { name: name, icon: selectedIcon };
+        this.game.players.push(player);
+      }
+    });
   }
 
   newGame() {
     this.game = new Game();
+  }
+
+  renderPlayingStack() {
+    this.renderCardStack();
   }
 
   renderCardStack() {
@@ -46,10 +78,28 @@ export class GameComponent implements OnInit {
       this.currentCard = this.game.playingStack.pop();
       this.pickCardAnimation = true;
       this.game.playedCards.push(this.currentCard);
+      this.nextPlayer();
+      console.log(this.game.players.length);
       setTimeout(() => {
         this.pickCardAnimation = false;
       }, 1000);
     }
-    console.log(this.game);
   }
+
+  nextPlayer() {
+    this.game.players.push(this.game.players.shift());
+  }
+}
+
+/**
+ * Shuffles array in place. ES6 version
+ * @param {Array} arrey
+ * @returns same arrey mixed
+ */
+function shuffleStack(arrey: string[]): Array<any> {
+  arrey.forEach((card: string, i: number) => {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arrey[i], arrey[j]] = [arrey[j], arrey[i]];
+  });
+  return arrey;
 }

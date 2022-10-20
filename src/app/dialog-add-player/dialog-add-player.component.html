@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>Please add a Player</h1>
+<div mat-dialog-content>
+  <p>What's your Name</p>
+  <mat-form-field appearance="fill">
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="name" />
+  </mat-form-field>
+  <div class="icon-color-box">
+    <mat-form-field appearance="fill">
+      <mat-label>Icon</mat-label>
+      <mat-select [(ngModel)]="selectedIcon" name="icon">
+        <mat-option *ngFor="let icon of icons" [value]="icon">
+          <img src="../../assets/img/player_icons/{{ icon }}" alt="" />
+        </mat-option>
+      </mat-select>
+      <img src="../../assets/img/player_icons/{{ selectedIcon }}" alt="" />
+    </mat-form-field>
+  </div>
+</div>
+<div class="preview">
+  <div class="player-box">
+    <div class="player">
+      <img src="../../assets/img/player_icons/{{ selectedIcon }}" alt="" />
+      <span>{{ name }} </span>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button
+    mat-button
+    [disabled]="name.length == 0"
+    [mat-dialog-close]="[name, selectedIcon]"
+    cdkFocusInitial
+  >
+    Ok
+  </button>
+</div>

@@ -1,9 +1,17 @@
 <div class="player-box">
   <div
     class="player"
-    [ngStyle]="{
-      'background-color': color
-    }"
+    [ngStyle]="
+      index === players - 1
+        ? {
+            'background-color': '#db0037',
+            scale: 1.2,
+            transform: 'translate(-10%, 10%)'
+          }
+        : {
+            'background-color': '#ffd36b'
+          }
+    "
   >
     <img src="../../assets/img/player_icons/{{ icon }}" alt="" />
     <span>{{ name }} </span>
