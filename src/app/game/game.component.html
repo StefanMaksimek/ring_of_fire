@@ -13,39 +13,43 @@
     class="player-component"
   ></app-player>
   <div class="icon-box">
-    <button
-      mat-fab
-      color="primary"
-      aria-label="Example icon button with a delete icon"
-      class="game-btn"
-      (click)="openDialog()"
-    >
+    <button mat-fab color="primary" class="game-btn" (click)="openDialog()">
       <mat-icon>person_add</mat-icon>
+      <span>Add player</span>
+    </button>
+    <button mat-fab color="primary" class="game-btn" (click)="restart()">
+      <mat-icon>refresh</mat-icon>
+      <span>Restart</span>
     </button>
   </div>
 
   <div class="card-stack">
     <!--  Card stack -->
-    <img
-      *ngFor="let card of cards.numbers; let i = index"
-      [ngStyle]="{
-        'left.px': 40 + i * 3,
-        'top.px': 40 + i * 2
-      }"
-      src="assets/img/cards/overlay_red.png"
-    />
-    <img
-      class="topCard"
-      (click)="pickCard()"
-      [ngStyle]="{
-        'left.px': 40 + cards.numbers.length * 3,
-        'top.px': 40 + cards.numbers.length * 2
-      }"
-      src="assets/img/cards/overlay_red.png"
-    />
+    <div class="stack" *ngIf="game.playingStack.length > 0">
+      <img
+        *ngFor="let card of game.playingStack; let i = index"
+        [ngStyle]="{
+          'left.px': 40 + i,
+          'top.px': 40 + i
+        }"
+        src="assets/img/cards/overlay_red.png"
+      />
+      <img
+        class="topCard"
+        (click)="pickCard()"
+        [ngStyle]="{
+          'left.px': 40 + game.playingStack.length,
+          'top.px': 40 + game.playingStack.length
+        }"
+        src="assets/img/cards/overlay_red.png"
+      />
+    </div>
     <!-- Current card animation-->
     <img
       *ngIf="pickCardAnimation"
+      [style.--orgDegrees]="deg[game.playedCards.length - 1] + 'deg'"
+      [style.--xOffset]="xOffset[game.playedCards.length - 1] + '%'"
+      [style.--yOffset]="yOffset[game.playedCards.length - 1] + '%'"
       class="pick-card"
       [ngStyle]="{
         'left.px': cards.numbers.length * 3,
@@ -61,8 +65,11 @@
         'top.px': cards.numbers.length * 2
       }"
       class="pick-card"
-      *ngFor="let card of game.playedCards"
+      *ngFor="let card of game.playedCards; let i = index"
       src="assets/img/cards/{{ card }}.png"
+      [style.--orgDegrees]="deg[i] + 'deg'"
+      [style.--xOffset]="xOffset[i] + '%'"
+      [style.--yOffset]="yOffset[i] + '%'"
       alt=""
     />
   </div>

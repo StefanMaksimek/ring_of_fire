@@ -30,6 +30,9 @@ export class GameComponent implements OnInit {
   public game!: Game;
 
   playingCards: any = [];
+  deg: number[] = [];
+  xOffset: number[] = [];
+  yOffset: number[] = [];
 
   pickCardAnimation: boolean = false;
   currentCard: any = '';
@@ -40,12 +43,13 @@ export class GameComponent implements OnInit {
     this.newGame();
     this.renderPlayingStack();
     shuffleStack(this.game.playingStack);
+    this.randomDegOffset();
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogAddPlayerComponent);
 
-    dialogRef.afterClosed().subscribe(([name, selectedIcon]: any[]): void => {
+    dialogRef.afterClosed().subscribe(([name, selectedIcon]): void => {
       if (name && name.length > 0) {
         let player = { name: name, icon: selectedIcon };
         this.game.players.push(player);
@@ -55,6 +59,12 @@ export class GameComponent implements OnInit {
 
   newGame() {
     this.game = new Game();
+  }
+
+  restart() {
+    this.game.playingStack = [];
+    this.game.playedCards = [];
+    this.renderPlayingStack();
   }
 
   renderPlayingStack() {
@@ -79,7 +89,6 @@ export class GameComponent implements OnInit {
       this.pickCardAnimation = true;
       this.game.playedCards.push(this.currentCard);
       this.nextPlayer();
-      console.log(this.game.players.length);
       setTimeout(() => {
         this.pickCardAnimation = false;
       }, 1000);
@@ -88,6 +97,14 @@ export class GameComponent implements OnInit {
 
   nextPlayer() {
     this.game.players.push(this.game.players.shift());
+  }
+
+  randomDegOffset() {
+    this.game.playingStack.forEach((e) => {
+      this.deg.push(getRandomArbitrary(360, 720));
+      this.xOffset.push(getRandomArbitrary(20, 80));
+      this.yOffset.push(getRandomArbitrary(20, 80));
+    });
   }
 }
 
@@ -102,4 +119,15 @@ function shuffleStack(arrey: string[]): Array<any> {
     [arrey[i], arrey[j]] = [arrey[j], arrey[i]];
   });
   return arrey;
+}
+
+/**
+ * generate random number; for example use 0.1 to 3
+ * but you can use 0 to infinite ( however, that makes no sense)
+ * @param {Number} min
+ * @param {Number} max
+ * @returns random number between min and max
+ */
+function getRandomArbitrary(min: number, max: number) {
+  return Math.random() * (max - min) + min;
 }

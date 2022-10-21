@@ -1,7 +1,9 @@
 @import "../../assets/variable.scss";
 
 .start-screen {
-  background: url("assets/img/gamedesk.jpg") no-repeat center center fixed;
+  height: 100vh;
+  background: url("../../assets/img/gamedesk.jpg") no-repeat center center fixed;
+  object-fit: cover;
   display: flex;
   justify-content: center;
   align-items: center;

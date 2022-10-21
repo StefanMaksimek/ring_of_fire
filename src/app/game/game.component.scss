@@ -7,6 +7,10 @@
 .game-field {
   height: 100vh;
   background: url("../../assets/img/gamedesk.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,14 +18,29 @@
   .icon-box {
     background-color: $white-tr;
     margin: $spacing-L;
-    padding: $spacing-S;
     border-radius: $brd-radius;
     box-shadow: 1px 1px 3px 3px rgb(0 0 0 / 20%);
     .game-btn {
+      position: relative;
       background-color: $primary;
+      margin: $spacing-S;
+      span {
+        position: absolute;
+        display: none;
+        background-color: $secondary;
+        color: $black;
+        top: 100%;
+        left: 50%;
+        transform: translate(-50%);
+        padding: 2px;
+        border-radius: $brd-radius;
+      }
       &:hover {
-        transform: scale(1.05) translate(-5%, -5%);
-        box-shadow: $shadow;
+        transform: scale(1.05);
+        span {
+          display: block;
+          transition: $transition-ms;
+        }
       }
     }
   }
@@ -33,26 +52,49 @@
       height: 220px;
       box-shadow: $shadow;
     }
-    .firering {
-      position: unset;
-      box-shadow: none;
-    }
     .topCard {
       cursor: pointer;
       transition: $transition-ms;
       &:hover {
         filter: brightness(0.8);
+        transform: scale(1.1) translate(10%, 10%);
       }
     }
     .pick-card {
       animation: pick-card-animation 1s linear;
-      transform: translate(400px, 400px) rotate(720deg) scale(1);
+      transform: translate(
+          calc(50vw - var(--xOffset) - 38px),
+          calc(50vh - var(--yOffset) - 38px)
+        )
+        rotate(var(--orgDegrees)) scale(1);
     }
   }
   .game-info {
     margin: $spacing-L;
     width: 50%;
     min-width: 300px;
+  }
+
+  .firering {
+    position: absolute;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 600px;
+      object-fit: cover;
+    }
+    .fire1 {
+      position: absolute;
+      animation: rotate 8s linear infinite;
+      opacity: 0.5;
+    }
+    .fire2 {
+      position: absolute;
+      animation: rotateBack 10s linear infinite;
+      opacity: 0.5;
+    }
   }
 }
 
@@ -61,10 +103,43 @@
     transform: translate(0, 0);
   }
   50% {
-    transform: translate(200px, 200px) rotate(360deg) scale(1.3);
+    transform: translate(25vw, 25vh) rotate(calc(var(--orgDegrees) / 2))
+      scale(1.3);
   }
 
   100% {
-    transform: translate(400px, 400px) rotate(720deg) scale(1);
+    transform: translate(
+        calc(50vw - var(--xOffset) - 38px),
+        calc(50vh - var(--yOffset) - 38px)
+      )
+      rotate(var(--orgDegrees)) scale(1);
+  }
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg) scale(1);
+    z-index: 5;
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+    z-index: 50;
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+    z-index: 5;
+  }
+}
+@keyframes rotateBack {
+  0% {
+    transform: rotate(0deg) scale(1);
+    z-index: 4;
+  }
+  50% {
+    transform: rotate(-180deg) scale(1.15);
+    z-index: 40;
+  }
+  100% {
+    transform: rotate(-360deg) scale(1);
+    z-index: 4;
   }
 }
