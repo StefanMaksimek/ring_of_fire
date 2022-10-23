@@ -21,9 +21,6 @@ export class DialogAddPlayerComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
 
-  name: string = '';
-  selectedIcon: string = 'angel.png';
-
   icons: string[] = [
     'angel.png',
     'thumbs_up.png',

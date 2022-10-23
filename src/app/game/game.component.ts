@@ -7,7 +7,6 @@ import {
 import { Game } from 'src/models/game';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 
-
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
@@ -55,7 +54,9 @@ export class GameComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(DialogAddPlayerComponent, data: {name: this.name, selectedIcon: this.selectedIcon},);
+    const dialogRef = this.dialog.open(DialogAddPlayerComponent, {
+      data: { name: this.name, selectedIcon: this.selectedIcon },
+    });
 
     dialogRef.afterClosed().subscribe((data): void => {
       if (data.name && data.name.length > 0) {
