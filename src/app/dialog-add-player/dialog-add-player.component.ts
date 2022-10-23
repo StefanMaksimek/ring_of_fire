@@ -1,5 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDialog,
+} from '@angular/material/dialog';
+
+export interface DialogData {
+  selectedIcon: string;
+  name: string;
+}
 
 @Component({
   selector: 'app-dialog-add-player',
@@ -7,7 +16,10 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./dialog-add-player.component.scss'],
 })
 export class DialogAddPlayerComponent implements OnInit {
-  constructor(public dialogRef: MatDialogRef<DialogAddPlayerComponent>) {}
+  constructor(
+    public dialogRef: MatDialogRef<DialogAddPlayerComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {}
 
   name: string = '';
   selectedIcon: string = 'angel.png';

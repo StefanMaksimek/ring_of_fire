@@ -3,12 +3,12 @@
   <p>What's your Name</p>
   <mat-form-field appearance="fill">
     <mat-label>Name</mat-label>
-    <input matInput [(ngModel)]="name" />
+    <input matInput [(ngModel)]="data.name" />
   </mat-form-field>
   <div class="icon-color-box">
     <mat-form-field appearance="fill">
       <mat-label>Icon</mat-label>
-      <mat-select [(ngModel)]="selectedIcon" name="icon">
+      <mat-select [(ngModel)]="data.selectedIcon" name="icon">
         <mat-option *ngFor="let icon of icons" [value]="icon">
           <img src="assets/img/player_icons/{{ icon }}" alt="" />
         </mat-option>
@@ -30,7 +30,7 @@
   <button
     mat-button
     [disabled]="name.length == 0"
-    [mat-dialog-close]="[name, selectedIcon]"
+    [mat-dialog-close]="data"
     cdkFocusInitial
   >
     Ok

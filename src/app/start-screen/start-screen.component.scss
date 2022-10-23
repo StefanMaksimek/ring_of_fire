@@ -3,7 +3,10 @@
 .start-screen {
   height: 100vh;
   background: url("../../assets/img/gamedesk.jpg") no-repeat center center fixed;
-  object-fit: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;

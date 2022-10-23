@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { Game } from 'src/models/game';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
+
 
 @Component({
   selector: 'app-game',
@@ -37,6 +42,9 @@ export class GameComponent implements OnInit {
   pickCardAnimation: boolean = false;
   currentCard: any = '';
 
+  name: string = '';
+  selectedIcon: string = 'angel.png';
+
   constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {
@@ -47,11 +55,11 @@ export class GameComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(DialogAddPlayerComponent);
+    const dialogRef = this.dialog.open(DialogAddPlayerComponent, data: {name: this.name, selectedIcon: this.selectedIcon},);
 
-    dialogRef.afterClosed().subscribe(([name, selectedIcon]): void => {
-      if (name && name.length > 0) {
-        let player = { name: name, icon: selectedIcon };
+    dialogRef.afterClosed().subscribe((data): void => {
+      if (data.name && data.name.length > 0) {
+        let player = { name: data.name, icon: data.selectedIcon };
         this.game.players.push(player);
       }
     });
