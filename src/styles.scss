@@ -4,3 +4,8 @@ body {
   height: 100vh;
   width: 100%;
 }
+
+.mat-select-panel .mat-option {
+  margin: 10px;
+  overflow: unset;
+}

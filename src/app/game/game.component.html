@@ -18,6 +18,7 @@
       <mat-icon>person_add</mat-icon>
       <span>Add player</span>
     </button>
+
     <button mat-fab color="primary" class="game-btn" (click)="restart()">
       <mat-icon>refresh</mat-icon>
       <span>Restart</span>
@@ -45,6 +46,7 @@
         src="assets/img/cards/overlay_red.png"
       />
     </div>
+
     <!-- Current card animation-->
     <img
       *ngIf="pickCardAnimation"
@@ -59,6 +61,7 @@
       [ngClass]="{ 'pick-card': pickCardAnimation }"
       src="assets/img/cards/{{ currentCard }}.png"
     />
+
     <!-- Played card stack-->
     <img
       [ngStyle]="{
@@ -75,7 +78,12 @@
     />
   </div>
 
-  <app-game-info [card]="currentCard" class="game-info"></app-game-info>
+  <app-game-info
+    [card]="currentCard"
+    [players]="game.players"
+    class="game-info"
+  ></app-game-info>
+
   <!--   
   <div class="firering">
     <img class="fire1" src="assets/img/blue_fire.png" alt="" />

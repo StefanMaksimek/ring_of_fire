@@ -24,6 +24,7 @@
       position: relative;
       background-color: $primary;
       margin: $spacing-S;
+      z-index: 5;
       span {
         position: absolute;
         display: none;
@@ -40,6 +41,7 @@
         span {
           display: block;
           transition: $transition-ms;
+          z-index: 10;
         }
       }
     }
@@ -57,7 +59,7 @@
       transition: $transition-ms;
       &:hover {
         filter: brightness(0.8);
-        transform: scale(1.1) translate(10%, 10%);
+        transform: scale(1.05) translate(5%, 5%);
       }
     }
     .pick-card {
@@ -149,6 +151,14 @@
     .icon-box {
       display: flex;
       flex-direction: column;
+      .game-btn {
+        span {
+          color: $black;
+          top: 0;
+          left: 100%;
+          transform: translate(8px, 25%);
+        }
+      }
     }
     .game-info {
       margin: 0;

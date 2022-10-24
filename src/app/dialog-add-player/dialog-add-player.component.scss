@@ -51,4 +51,27 @@ mat-option {
 
 .icon-color-box {
   display: flex;
+  flex-direction: column;
+}
+
+.add {
+  background-color: $primary;
+  color: $white;
+  &:hover {
+    background-color: $primary-hvr;
+  }
+  &:disabled {
+    background-color: transparent;
+    color: gray;
+    cursor: not-allowed;
+  }
+}
+
+@media (max-height: 450px) {
+  .icon-color-box {
+    flex-direction: row;
+    :first-child {
+      margin-right: $spacing-S;
+    }
+  }
 }

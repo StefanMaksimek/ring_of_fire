@@ -1,22 +1,30 @@
 <h1 mat-dialog-title>Please add a Player</h1>
+
 <div mat-dialog-content>
-  <p>What's your Name</p>
-  <mat-form-field appearance="fill">
-    <mat-label>Name</mat-label>
-    <input matInput [(ngModel)]="data.name" />
-  </mat-form-field>
   <div class="icon-color-box">
-    <mat-form-field appearance="fill">
-      <mat-label>Icon</mat-label>
-      <mat-select [(ngModel)]="data.selectedIcon" name="icon">
-        <mat-option *ngFor="let icon of icons" [value]="icon">
-          <img src="assets/img/player_icons/{{ icon }}" alt="" />
-        </mat-option>
-      </mat-select>
-      <img src="assets/img/player_icons/{{ data.selectedIcon }}" alt="" />
-    </mat-form-field>
+    <div>
+      <p>What's your Name</p>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="data.name" />
+      </mat-form-field>
+    </div>
+
+    <div>
+      <p>Choose your icon</p>
+      <mat-form-field appearance="fill">
+        <mat-label>Select</mat-label>
+        <mat-select [(ngModel)]="data.selectedIcon" name="icon">
+          <mat-option *ngFor="let icon of icons" [value]="icon">
+            <img src="assets/img/player_icons/{{ icon }}" alt="" />
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
   </div>
 </div>
+
 <div class="preview">
   <div class="player-box">
     <div class="player">
@@ -25,13 +33,15 @@
     </div>
   </div>
 </div>
+
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No Thanks</button>
+
   <button
+    class="add"
     mat-button
     [disabled]="data.name.length == 0"
     [mat-dialog-close]="data"
-    cdkFocusInitial
   >
     Ok
   </button>

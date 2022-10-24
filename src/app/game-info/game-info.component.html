@@ -1,6 +1,12 @@
 <mat-card>
-  <mat-card-title>{{ card ? title : "No card" }}</mat-card-title>
+  <mat-card-title>{{
+    players.length < 2 ? "Add player" : card ? title : "No card"
+  }}</mat-card-title>
   <mat-card-content>{{
-    card ? description : "Please pick a card"
+    players.length < 2
+      ? "Please add min two players"
+      : card
+      ? description
+      : "Please pick a card"
   }}</mat-card-content>
 </mat-card>

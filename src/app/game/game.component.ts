@@ -93,14 +93,18 @@ export class GameComponent implements OnInit {
   }
 
   pickCard() {
-    if (!this.pickCardAnimation) {
-      this.currentCard = this.game.playingStack.pop();
-      this.pickCardAnimation = true;
-      this.game.playedCards.push(this.currentCard);
-      this.nextPlayer();
-      setTimeout(() => {
-        this.pickCardAnimation = false;
-      }, 1000);
+    if (this.game.players.length > 1) {
+      if (!this.pickCardAnimation) {
+        this.currentCard = this.game.playingStack.pop();
+        this.pickCardAnimation = true;
+        this.game.playedCards.push(this.currentCard);
+        this.nextPlayer();
+        setTimeout(() => {
+          this.pickCardAnimation = false;
+        }, 1000);
+      }
+    } else {
+      this.openDialog();
     }
   }
 
