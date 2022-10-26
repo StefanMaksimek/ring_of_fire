@@ -1,9 +1,21 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+  addDoc,
+  collectionData,
+  doc,
+  docData,
+  Firestore,
+  setDoc,
+  updateDoc,
+} from '@angular/fire/firestore';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
+import {
+  collection,
+  CollectionReference,
+  DocumentData,
+} from '@firebase/firestore';
+import { Observable } from 'rxjs';
 import { Game } from 'src/models/game';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 
@@ -33,24 +45,64 @@ export class GameComponent implements OnInit {
   };
   public game!: Game;
 
-  playingCards: any = [];
-  deg: number[] = [];
-  xOffset: number[] = [];
-  yOffset: number[] = [];
-
   pickCardAnimation: boolean = false;
-  currentCard: any = '';
 
   name: string = '';
   selectedIcon: string = 'angel.png';
 
-  constructor(public dialog: MatDialog) {}
+  public gameCollection: CollectionReference<DocumentData>;
+
+  constructor(
+    public dialog: MatDialog,
+    public firestore: Firestore,
+    private route: ActivatedRoute
+  ) {
+    this.gameCollection = collection(this.firestore, 'games');
+  }
 
   ngOnInit(): void {
     this.newGame();
-    this.renderPlayingStack();
-    shuffleStack(this.game.playingStack);
-    this.randomDegOffset();
+    this.setGameId();
+
+    this.getGame();
+
+    console.log('ngOnInit() => this.game.id', this.game.id);
+  }
+
+  getGame() {
+    const gameRef = collection(this.firestore, 'games');
+    collectionData(gameRef, this.game.id).subscribe((g: any) => {
+      console.log('test', g);
+      this.game.players = g[0].players;
+      this.game.playingStack = g[0].playingStack;
+      this.game.playedCards = g[0].playedCards;
+      this.game.curentPlayer = g[0].curentPlayer;
+      this.game.currentCard = g[0].currentCard;
+      this.game.deg = g[0].deg;
+      this.game.xOffset = g[0].xOffset;
+      this.game.yOffset = g[0].yOffset;
+      console.log('getGame() => subscribe colletion "games"', g);
+      console.log('g.players', g[0].players);
+
+      console.log('this.game', this.game);
+    });
+    console.log('getGame() => coll"games" to this.game ', this.game);
+  }
+
+  updateGame() {
+    const gameRef = collection(this.firestore, 'games');
+    setDoc(doc(gameRef, this.game.id), this.game.toJson());
+    console.log(
+      'updateGame() => setDoc data: this.game.toJson()',
+      this.game.toJson()
+    );
+  }
+
+  setGameId() {
+    this.route.params.subscribe((params: any) => {
+      this.game.id = params.id;
+    });
+    console.log('setGameID() => this.game.id', this.game.id);
   }
 
   openDialog(): void {
@@ -62,22 +114,28 @@ export class GameComponent implements OnInit {
       if (data && data.name.length > 0) {
         let player = { name: data.name, icon: data.selectedIcon };
         this.game.players.push(player);
+        this.updateGame();
       }
     });
   }
 
   newGame() {
     this.game = new Game();
+    this.renderPlayingStack();
+    this.randomDegOffset();
+    console.log('newGame() => this.game', this.game);
   }
 
   restart() {
     this.game.playingStack = [];
     this.game.playedCards = [];
     this.renderPlayingStack();
+    this.updateGame();
   }
 
   renderPlayingStack() {
     this.renderCardStack();
+    shuffleStack(this.game.playingStack);
   }
 
   renderCardStack() {
@@ -95,12 +153,14 @@ export class GameComponent implements OnInit {
   pickCard() {
     if (this.game.players.length > 1) {
       if (!this.pickCardAnimation) {
-        this.currentCard = this.game.playingStack.pop();
+        this.game.currentCard = this.game.playingStack.pop();
         this.pickCardAnimation = true;
-        this.game.playedCards.push(this.currentCard);
+        this.game.playedCards.push(this.game.currentCard);
         this.nextPlayer();
+        this.updateGame();
         setTimeout(() => {
           this.pickCardAnimation = false;
+          this.updateGame();
         }, 1000);
       }
     } else {
@@ -114,13 +174,12 @@ export class GameComponent implements OnInit {
 
   randomDegOffset() {
     this.game.playingStack.forEach((e) => {
-      this.deg.push(getRandomArbitrary(360, 720));
-      this.xOffset.push(getRandomArbitrary(20, 80));
-      this.yOffset.push(getRandomArbitrary(20, 80));
+      this.game.deg.push(getRandomArbitrary(360, 720));
+      this.game.xOffset.push(getRandomArbitrary(20, 80));
+      this.game.yOffset.push(getRandomArbitrary(20, 80));
     });
   }
 }
-
 /**
  * Shuffles array in place. ES6 version
  * @param {Array} arrey
@@ -143,4 +202,20 @@ function shuffleStack(arrey: string[]): Array<any> {
  */
 function getRandomArbitrary(min: number, max: number) {
   return Math.random() * (max - min) + min;
+}
+
+/**
+ *
+ * @param length Integer for lenght of create Id
+ * @returns a random "Id" with the lenght of @param lenght
+ */
+function createID(length: number) {
+  let result = '';
+  let characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-;:_+*#%&$§';
+  let charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength)); // adding one random character of characters to result
+  }
+  return result;
 }

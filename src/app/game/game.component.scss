@@ -28,7 +28,7 @@
       span {
         position: absolute;
         display: none;
-        background-color: $secondary;
+        background-color: $secondary-tr;
         color: $black;
         top: 100%;
         left: 50%;
@@ -53,6 +53,7 @@
       position: absolute;
       height: 220px;
       box-shadow: $shadow;
+      border-radius: 0.6rem;
     }
     .topCard {
       cursor: pointer;

@@ -50,16 +50,16 @@
     <!-- Current card animation-->
     <img
       *ngIf="pickCardAnimation"
-      [style.--orgDegrees]="deg[game.playedCards.length - 1] + 'deg'"
-      [style.--xOffset]="xOffset[game.playedCards.length - 1] + '%'"
-      [style.--yOffset]="yOffset[game.playedCards.length - 1] + '%'"
+      [style.--orgDegrees]="game.deg[game.playedCards.length - 1] + 'deg'"
+      [style.--xOffset]="game.xOffset[game.playedCards.length - 1] + '%'"
+      [style.--yOffset]="game.yOffset[game.playedCards.length - 1] + '%'"
       class="pick-card"
       [ngStyle]="{
         'left.px': cards.numbers.length * 3,
         'top.px': cards.numbers.length * 2
       }"
       [ngClass]="{ 'pick-card': pickCardAnimation }"
-      src="assets/img/cards/{{ currentCard }}.png"
+      src="assets/img/cards/{{ game.currentCard }}.png"
     />
 
     <!-- Played card stack-->
@@ -71,15 +71,15 @@
       class="pick-card"
       *ngFor="let card of game.playedCards; let i = index"
       src="assets/img/cards/{{ card }}.png"
-      [style.--orgDegrees]="deg[i] + 'deg'"
-      [style.--xOffset]="xOffset[i] + '%'"
-      [style.--yOffset]="yOffset[i] + '%'"
+      [style.--orgDegrees]="game.deg[i] + 'deg'"
+      [style.--xOffset]="game.xOffset[i] + '%'"
+      [style.--yOffset]="game.yOffset[i] + '%'"
       alt=""
     />
   </div>
 
   <app-game-info
-    [card]="currentCard"
+    [card]="game.currentCard"
     [players]="game.players"
     class="game-info"
   ></app-game-info>
