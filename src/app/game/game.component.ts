@@ -18,6 +18,7 @@ import {
 import { Observable } from 'rxjs';
 import { Game } from 'src/models/game';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
+import { ShareGameComponent } from '../share-game/share-game.component';
 
 @Component({
   selector: 'app-game',
@@ -131,6 +132,12 @@ export class GameComponent implements OnInit {
     this.game.playedCards = [];
     this.renderPlayingStack();
     this.updateGame();
+  }
+
+  shareGame() {
+    const dialogRef = this.dialog.open(ShareGameComponent, {
+      data: { gameID: this.game.id, url: 'url' },
+    });
   }
 
   renderPlayingStack() {
