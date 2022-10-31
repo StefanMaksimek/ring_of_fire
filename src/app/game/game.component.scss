@@ -4,6 +4,25 @@
   position: absolute;
 }
 
+.error {
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: $secondary-tr;
+  z-index: 9999;
+  h2 {
+    text-align: center;
+    background-color: $primary;
+    color: $white;
+    padding: $spacing-S;
+    border-radius: $brd-radius;
+  }
+}
+
 .game-field {
   height: 100vh;
   background: url("../../assets/img/gamedesk.jpg") no-repeat center center fixed;
@@ -20,6 +39,7 @@
     margin: $spacing-L;
     border-radius: $brd-radius;
     box-shadow: 1px 1px 3px 3px rgb(0 0 0 / 20%);
+    z-index: 50;
     .game-btn {
       position: relative;
       background-color: $primary;
@@ -28,7 +48,7 @@
       span {
         position: absolute;
         display: none;
-        background-color: $secondary-tr;
+        background-color: $secondary;
         color: $black;
         top: 100%;
         left: 50%;
@@ -146,18 +166,14 @@
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
   .game-field {
     align-items: flex-start;
     .icon-box {
       display: flex;
-      flex-direction: column;
       .game-btn {
         span {
           color: $black;
-          top: 0;
-          left: 100%;
-          transform: translate(8px, 25%);
         }
       }
     }
@@ -174,7 +190,7 @@
       .pick-card {
         animation: pick-card-animation 1s linear;
         transform: translate(
-            calc(70vw - var(--xOffset) - 16px),
+            calc(50vw - var(--xOffset) - 16px),
             calc(20vh - var(--yOffset) - 16px)
           )
           rotate(var(--orgDegrees)) scale(1);
@@ -187,13 +203,13 @@
       transform: translate(0, 0);
     }
     50% {
-      transform: translate(35vw, 10vh) rotate(calc(var(--orgDegrees) / 2))
+      transform: translate(25vw, 10vh) rotate(calc(var(--orgDegrees) / 2))
         scale(1.3);
     }
 
     100% {
       transform: translate(
-          calc(70vw - var(--xOffset) - 16px),
+          calc(50vw - var(--xOffset) - 16px),
           calc(20vh - var(--yOffset) - 16px)
         )
         rotate(var(--orgDegrees)) scale(1);
@@ -202,16 +218,36 @@
 }
 
 @media (max-width: 570px) {
+  .card-stack {
+    img {
+      height: 110px;
+    }
+  }
+}
+
+@media (max-height: 500px) {
   .game-field {
-    justify-content: flex-end;
-    .icon-box {
-      flex-direction: row;
-      margin-bottom: 0;
+    .game-info {
+      margin: 0;
+      width: 100%;
+      min-width: none;
     }
     .card-stack {
       img {
         height: 110px;
       }
     }
+  }
+}
+
+@media (max-height: 380px) {
+  .error {
+    display: flex;
+  }
+}
+
+@media (max-width: 510px) {
+  .error {
+    display: flex;
   }
 }

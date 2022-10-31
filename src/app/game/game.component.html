@@ -2,8 +2,8 @@
   <app-player
     *ngFor="let player of game.players.slice().reverse(); let i = index"
     [ngStyle]="{
-      'right.px': 20 + i * 10,
-      'top.px': 20 + i * 35,
+      'right.px': 40,
+      'top.px': 40 + i * 35,
       'z-index': 900 + i
     }"
     [index]="i"
@@ -88,10 +88,8 @@
     [players]="game.players"
     class="game-info"
   ></app-game-info>
+</div>
 
-  <!--   
-  <div class="firering">
-    <img class="fire1" src="assets/img/blue_fire.png" alt="" />
-    <img class="fire2" src="assets/img/blue_fire.png" alt="" />
-  </div>-->
+<div class="error">
+  <h2>Please play on desktop</h2>
 </div>

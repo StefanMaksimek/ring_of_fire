@@ -3,3 +3,14 @@
 mat-card {
   margin: $spacing-L;
 }
+@media (max-width: 800px) {
+  mat-card {
+    margin: 0 $spacing-L;
+  }
+}
+
+@media (max-height: 500px) {
+  mat-card {
+    margin: 0 $spacing-L;
+  }
+}

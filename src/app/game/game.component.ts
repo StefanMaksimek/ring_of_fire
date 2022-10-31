@@ -64,46 +64,33 @@ export class GameComponent implements OnInit {
   ngOnInit(): void {
     this.newGame();
     this.setGameId();
-
+    this.updateGame();
     this.getGame();
-
-    console.log('ngOnInit() => this.game.id', this.game.id);
   }
 
   getGame() {
     const gameRef = collection(this.firestore, 'games');
-    collectionData(gameRef, this.game.id).subscribe((g: any) => {
-      console.log('test', g);
-      this.game.players = g[0].players;
-      this.game.playingStack = g[0].playingStack;
-      this.game.playedCards = g[0].playedCards;
-      this.game.curentPlayer = g[0].curentPlayer;
-      this.game.currentCard = g[0].currentCard;
-      this.game.deg = g[0].deg;
-      this.game.xOffset = g[0].xOffset;
-      this.game.yOffset = g[0].yOffset;
-      console.log('getGame() => subscribe colletion "games"', g);
-      console.log('g.players', g[0].players);
-
-      console.log('this.game', this.game);
+    docData(doc(gameRef, this.game.id)).subscribe((game: any) => {
+      this.game.players = game.players;
+      this.game.playingStack = game.playingStack;
+      this.game.playedCards = game.playedCards;
+      this.game.curentPlayer = game.curentPlayer;
+      this.game.currentCard = game.currentCard;
+      this.game.deg = game.deg;
+      this.game.xOffset = game.xOffset;
+      this.game.yOffset = game.yOffset;
     });
-    console.log('getGame() => coll"games" to this.game ', this.game);
   }
 
   updateGame() {
     const gameRef = collection(this.firestore, 'games');
     setDoc(doc(gameRef, this.game.id), this.game.toJson());
-    console.log(
-      'updateGame() => setDoc data: this.game.toJson()',
-      this.game.toJson()
-    );
   }
 
   setGameId() {
     this.route.params.subscribe((params: any) => {
       this.game.id = params.id;
     });
-    console.log('setGameID() => this.game.id', this.game.id);
   }
 
   openDialog(): void {
@@ -124,7 +111,7 @@ export class GameComponent implements OnInit {
     this.game = new Game();
     this.renderPlayingStack();
     this.randomDegOffset();
-    console.log('newGame() => this.game', this.game);
+    this.game.loadImages();
   }
 
   restart() {

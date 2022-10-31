@@ -1,8 +1,3 @@
-import { OnInit } from '@angular/core';
-import { collectionData, Firestore } from '@angular/fire/firestore';
-import { collection } from '@firebase/firestore';
-import { Observable } from 'rxjs';
-
 export class Game {
   public id: any;
   public json = this.toJson();
@@ -28,5 +23,12 @@ export class Game {
       xOffset: this.xOffset,
       yOffset: this.yOffset,
     };
+  }
+
+  loadImages() {
+    this.playingStack.forEach((card) => {
+      let img = new Image();
+      img.src = `assets/img/cards/${card}.png`;
+    });
   }
 }
